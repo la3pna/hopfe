@@ -1,0 +1,56 @@
+Program New;
+
+{
+Pascal code for receiving data from microcontroller and saving to file.
+Code written in Ulrich Bangert's EZ-GPIB for instrument control. 
+}
+
+
+const
+com = 14;
+CR = 13;
+LF = 10;
+tabval = 9;
+Fn = 'C:\EZGPIB_data\textfilename.txt'  ;
+
+var
+crlf : string;
+tab : string;
+data : string;
+
+{fn is file name; aStr is data to be written to file}
+{---------------------------------------------------}
+Procedure FileWriteln(fn, aStr   : String);
+{---------------------------------------------------}
+Begin 
+ezgpib_FileAddToBuffer(aStr);
+ezgpib_Filewrite(fn);
+ezgpib_FileClearBuffer;
+End;
+
+begin;
+crlf := Chr(CR)+CHR(LF);
+EZGPIB_ScreenClear; 
+EZGPIB_ScreenWriteln('Press enter to start');
+EZGPIB_ComOpen(com,9600,8,'n',1);
+tab := Chr(tabval);
+EZGPIB_KbdReadLn;
+
+EZGPIB_ComWrite(com,'Y');
+data := EZGPIB_ComRead (com);
+ FileWriteln (Fn, data );
+ EZGPIB_ScreenWriteln('Aquiring data');
+ 
+repeat
+data := '0';
+EZGPIB_ComWrite(com,'H');
+ data := EZGPIB_ComRead (com);
+ FileWriteln (Fn, data)
+ EZGPIB_ScreenWriteln(data);
+EZGPIB_TimeWaitforMultipleof(2);
+until EZGPIB_kbdkeypressed;
+EZGPIB_ScreenWriteln('Aquiring terminated');
+//EZGPIB_ComWrite(com,'I');
+
+
+end.
