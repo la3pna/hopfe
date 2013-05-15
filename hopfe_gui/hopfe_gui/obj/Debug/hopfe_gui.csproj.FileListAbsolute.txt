@@ -1,0 +1,8 @@
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\bin\Debug\hopfe_gui.exe
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\bin\Debug\hopfe_gui.pdb
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\obj\Debug\hopfe_gui.csprojResolveAssemblyReference.cache
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\obj\Debug\Curve_tracer.Form1.resources
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\obj\Debug\hopfe_gui.Properties.Resources.resources
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\obj\Debug\hopfe_gui.csproj.GenerateResource.Cache
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\obj\Debug\hopfe_gui.exe
+C:\Users\Thomas\Documents\GitHub\hopfe\hopfe_gui\hopfe_gui\obj\Debug\hopfe_gui.pdb
