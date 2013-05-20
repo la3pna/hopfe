@@ -67,7 +67,7 @@ namespace Curve_tracer
             Stream myStream ; 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog(); 
 
-            saveFileDialog1.Filter = "Comma separated (*.csv)|*.csv|All files (*.*)|*.*" ; 
+            saveFileDialog1.Filter = "Comma separated (*.csv)|*.csv|Graph picture (*.jpg)|*.jpg|All files (*.*)|*.*" ; 
             saveFileDialog1.FilterIndex = 1 ; 
             saveFileDialog1.RestoreDirectory = true ; 
 
