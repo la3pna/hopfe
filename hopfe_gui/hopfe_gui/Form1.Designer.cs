@@ -45,6 +45,8 @@
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -52,7 +54,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(803, 338);
+            this.button1.Location = new System.Drawing.Point(791, 459);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -199,11 +201,35 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "label5";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(758, 332);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Base resistance";
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "10k",
+            "50k",
+            "100k",
+            "200k"});
+            this.comboBox3.Location = new System.Drawing.Point(756, 368);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(141, 21);
+            this.comboBox3.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(911, 524);
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.label4);
@@ -246,6 +272,8 @@
         private System.Windows.Forms.ToolStripMenuItem manualToolStripMenuItem;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox3;
     }
 }
 
