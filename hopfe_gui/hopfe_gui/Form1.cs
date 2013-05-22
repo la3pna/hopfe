@@ -138,5 +138,87 @@ namespace Curve_tracer
         {
             // her kommer koden som sender en H, og venter på bedre tider.
         }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void comboBox3_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (comboBox3.Text == "0")
+            {
+                label7.Text = "0";
+                int MyInt = 65; // set switch 1
+                byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 66; // set switch 2
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 67; // set switch 3
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 68; // set switch 4
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+
+            }
+            else if (comboBox3.Text == "10k")
+            {
+                label7.Text = "10k";
+                int MyInt = 66; // set switch 2
+                byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 67; // set switch 3
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 68; // set switch 4
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+
+            }
+            else if (comboBox2.Text == "50k")
+            {
+                label7.Text = "50k";
+                int MyInt = 65; // set switch 1
+                byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 67; // set switch 3
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 68; // set switch 4
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+
+            }
+            else if (comboBox3.Text == "100k")
+            {
+                label7.Text = "100k";
+                int MyInt = 65; // set switch 1
+                byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 66; // set switch 2
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 68; // set switch 4
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+
+            }
+            else if (comboBox3.Text == "200k")
+            {
+                label7.Text = "200k";
+                int MyInt = 65; // set switch 1
+                byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 67; // set switch 3
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+                MyInt = 66; // set switch 2
+                b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
+
+            }
+        }
     }
 }
