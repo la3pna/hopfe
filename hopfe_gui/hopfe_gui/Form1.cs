@@ -8,6 +8,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Curve_tracer
 {
@@ -136,7 +137,32 @@ namespace Curve_tracer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // her kommer koden som sender en H, og venter på bedre tider.
+
+            int MyInt = 72; // set H for the sweep
+            byte[] b = BitConverter.GetBytes(MyInt);
+            serialPort1.Write(b, 0, 1);
+            this.Invoke(new EventHandler(rs232datamottat));
+
+        }
+
+
+        private void rs232datamottat(object s, EventArgs e)
+        {
+            for (int i = 1; i <= 1024; i++)
+            {
+                string servaluestrn = serialPort1.ReadLine();
+                textBox1.Text = servaluestrn;
+                if (Regex.IsMatch(servaluestrn, @"\d"))
+                {
+                    string[] servalspl = servaluestrn.Split(' ');
+
+                    string a = servalspl[0];
+                    string b = servalspl[1];
+                    int aint = Convert.ToInt32(a);
+                    int bint = Convert.ToInt32(b);
+                    progressBar1.Value = Convert.ToInt32(b);
+                }
+            }
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
