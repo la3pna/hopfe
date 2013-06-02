@@ -18,6 +18,7 @@ namespace Curve_tracer
     {
         float[] aArray;
         float[] bArray;
+        int stepvalue;
 
         public Form1()
         {
@@ -73,34 +74,66 @@ namespace Curve_tracer
 
         private void saveVectorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stream myStream ; 
+             Stream myStream ; 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog(); 
 
-            saveFileDialog1.Filter = "Comma separated (*.csv)|*.csv|Graph picture (*.jpg)|*.jpg|All files (*.*)|*.*" ; 
+            saveFileDialog1.Filter = "Comma separated (*.csv)|*.csv|Graph picture (*.bmp)|*.bmp|All files (*.*)|*.*" ; 
             saveFileDialog1.FilterIndex = 1 ; 
             saveFileDialog1.RestoreDirectory = true ; 
 
             if(saveFileDialog1.ShowDialog() == DialogResult.OK) 
             { 
+
+
                   if((myStream = saveFileDialog1.OpenFile()) != null) 
                   { 
-                        StreamWriter wText =new StreamWriter(myStream);
+                                      
 
-                        wText.WriteLine("Data from I/V analyzer");
 
-                        int length = aArray.Length;
-                        for (int i = 0; i <= length-1; i++)
-                        {
-                            wText.WriteLine(Convert.ToString(aArray[i]) + ',' + Convert.ToString(bArray[i])); 
-                           
-                        }
+                                         var extension = Path.GetExtension(saveFileDialog1.FileName);
 
-                        wText.Flush();
-                        wText.Close();
-                        
-                  }
+                                         switch (extension.ToLower())
+                                         {
+                                             case ".bmp":
+
+                                                  Bitmap bmp = new Bitmap(panel1.Width, panel1.Height);
+                                                  panel1.DrawToBitmap(bmp, panel1.Bounds);
+                                                 // bmp.Save(@"C:\Temp\Test.bmp");
+                                                 // bmp.Save(saveFileDialog1.FileName);
+
+                                                 break;
+                                             case ".csv":
+                                                 StreamWriter wText =new StreamWriter(myStream);
+
+                                      wText.WriteLine("Data from I/V analyzer");
+                                     int length = aArray.Length;
+                                     for (int i = 0; i <= length-1; i++)
+                                       {
+                                           wText.WriteLine(Convert.ToString(aArray[i]) + ',' + Convert.ToString(bArray[i])); 
+                                       }
+                                         wText.Flush();
+                                         wText.Close();
+                                                 break;
+                                             default:
+                                                 throw new ArgumentOutOfRangeException(extension);
+                                         }
+
+
+               }   
+
+
+
+
+
+                       // Bitmap bmp = new Bitmap(panel1.Width, panel1.Height);
+                       // panel1.DrawToBitmap(bmp, panel1.Bounds);
+                       // bmp.Save(@"C:\Temp\Test.bmp");
+
+                  
             }
         }
+
+ 
 
         private void comboBox2_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -248,6 +281,8 @@ namespace Curve_tracer
                 MyInt = 68; // set switch 4
                 b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+             //   label8.Text = Convert.ToString((5 / stepvalue) / 10000);
+
 
             }
             else if (comboBox2.Text == "50k")
@@ -303,6 +338,7 @@ namespace Curve_tracer
                 Graphics ClientDC = panel1.CreateGraphics();
                 Pen Pen1 = new Pen(System.Drawing.Color.Blue, 1);
                 Pen Pen2 = new Pen(System.Drawing.Color.Red, 1);
+                Pen Pen3 = new Pen(System.Drawing.Color.Gray, 1);
                 float xmax = bArray.Max()+1;
                 float ymax = aArray.Max()+1;
                 float xscale = panel1.Width;
@@ -317,10 +353,24 @@ namespace Curve_tracer
                     e.Graphics.FillRectangle(blueBrush, ((bArray[i]/xmax)*xscale), (Math.Abs((aArray[i]/ymax)-1)*yscale), 4, 4);
                   //  ClientDC.DrawLine(Pen1, (1*xscale), (0*yscale), (0*xscale), (1*yscale));
                    // ClientDC.DrawLine(Pen2, ((bArray[i] / xmax) * xscale), ( Math.Abs((aArray[i] / ymax)-1) * yscale), ( (bArray[i + 1] / xmax) * xscale), ( Math.Abs((aArray[i + 1] / ymax)-1) * xscale));
+               
+                   
+
                 }
 
-                
+                for (int i = 0; i <= 10; i++)
+                {
+                    ClientDC.DrawLine(Pen3, (i * xscale)/10, (0 * yscale), (i * xscale)/10, (1 * yscale));
 
+                }
+
+                for (int i = 0; i <= 10; i++)
+                {
+                    ClientDC.DrawLine(Pen3, (0 * xscale), (i * yscale)/10, (1 * xscale), (i * yscale)/10);
+                }
+
+                label9.Text = Convert.ToString(Math.Round((xmax / 10) * 0.00488,2)) + 'V';
+                label10.Text = Convert.ToString(Math.Round((ymax / 10) * 0.00488,2)) ;
 
             }
         }
