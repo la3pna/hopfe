@@ -37,6 +37,8 @@ namespace Curve_tracer
             comboBox1.Items.AddRange(tList.ToArray());
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
+            numericUpDown1.Value = 5;
+            numericUpDown2.Value = 6;
         }
 
 
@@ -84,7 +86,15 @@ namespace Curve_tracer
                   { 
                         StreamWriter wText =new StreamWriter(myStream);
 
-                        wText.WriteLine("Version 4");
+                        wText.WriteLine("Data from I/V analyzer");
+
+                        int length = aArray.Length;
+                        for (int i = 0; i <= length-1; i++)
+                        {
+                            wText.WriteLine(Convert.ToString(aArray[i]) + ',' + Convert.ToString(bArray[i])); 
+                           
+                        }
+
                         wText.Flush();
                         wText.Close();
                         
@@ -154,14 +164,15 @@ namespace Curve_tracer
 
         private void rs232datamottat(object s, EventArgs e)
         {
-            int steps = 5;
-            int length = steps * 128;
+            int steps =6;
+            int length = steps * 125;
+          //  int length = _serialPort.ReadBufferSize
             List<float> lista = new List<float>();
             List<float> listb = new List<float>();
             for (int i = 1; i <= (length-1); i++)
             {
                 string servaluestrn = serialPort1.ReadLine();
-                textBox1.Text = servaluestrn;
+                
                 if (Regex.IsMatch(servaluestrn, @"\d"))
                 {
                     string[] servalspl = servaluestrn.Split(' ');
@@ -180,9 +191,25 @@ namespace Curve_tracer
 
                 }
             }
-            aArray = lista.ToArray();
-            bArray = listb.ToArray();
-            this.panel1.Invalidate();
+            float[] aArrayn = lista.ToArray();
+            float[] bArrayn = listb.ToArray();
+
+            int lengthArray = Convert.ToInt32(aArrayn.Length);
+            List<float> listan = new List<float>();
+            List<float> listbn = new List<float>();
+
+            for (int i = 0; i <= (lengthArray - 5); i++)
+            {
+                listan.Add(Convert.ToSingle((aArrayn[i] + aArrayn[i + 1] + aArrayn[i + 2] + aArrayn[i + 3]) / 4.0));
+                listbn.Add(Convert.ToSingle((bArrayn[i] + bArrayn[i + 1] + bArrayn[i + 2] + bArrayn[i + 3]) / 4.0));
+               // aArray[i] = ;
+               // bArray[i] = ;
+                
+            }
+                  aArray = listan.ToArray();
+                  bArray = listbn.ToArray();
+                  progressBar1.Value = 0;
+                this.panel1.Invalidate();
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -276,8 +303,8 @@ namespace Curve_tracer
                 Graphics ClientDC = panel1.CreateGraphics();
                 Pen Pen1 = new Pen(System.Drawing.Color.Blue, 1);
                 Pen Pen2 = new Pen(System.Drawing.Color.Red, 1);
-                float xmax = bArray.Max();
-                float ymax = aArray.Max();
+                float xmax = bArray.Max()+1;
+                float ymax = aArray.Max()+1;
                 float xscale = panel1.Width;
                 float yscale = panel1.Height;
                 float length = aArray.Length;
@@ -286,12 +313,21 @@ namespace Curve_tracer
                 {
 
                     float xvalue = (bArray[i] / xmax)*xscale;
-
-                    ClientDC.DrawLine(Pen1, (1*xscale), (0*yscale), (0*xscale), (1*yscale));
-                    ClientDC.DrawLine(Pen2, ((bArray[i] / xmax) * xscale), ((aArray[i] / ymax) * yscale), ((bArray[i + 1] / xmax) * xscale), ((aArray[i + 1] / ymax) * xscale));
+                    SolidBrush blueBrush = new SolidBrush(Color.Blue);
+                    e.Graphics.FillRectangle(blueBrush, ((bArray[i]/xmax)*xscale), (Math.Abs((aArray[i]/ymax)-1)*yscale), 4, 4);
+                  //  ClientDC.DrawLine(Pen1, (1*xscale), (0*yscale), (0*xscale), (1*yscale));
+                   // ClientDC.DrawLine(Pen2, ((bArray[i] / xmax) * xscale), ( Math.Abs((aArray[i] / ymax)-1) * yscale), ( (bArray[i + 1] / xmax) * xscale), ( Math.Abs((aArray[i + 1] / ymax)-1) * xscale));
                 }
 
+                
+
+
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
