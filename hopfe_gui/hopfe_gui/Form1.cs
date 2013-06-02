@@ -10,12 +10,18 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 
+
 namespace Curve_tracer
 {
+
     public partial class Form1 : Form
     {
+        float[] aArray;
+        float[] bArray;
+
         public Form1()
         {
+            
             InitializeComponent();
             List<String> tList = new List<String>();
 
@@ -148,7 +154,11 @@ namespace Curve_tracer
 
         private void rs232datamottat(object s, EventArgs e)
         {
-            for (int i = 1; i <= 1024; i++)
+            int steps = 5;
+            int length = steps * 128;
+            List<float> lista = new List<float>();
+            List<float> listb = new List<float>();
+            for (int i = 1; i <= (length-1); i++)
             {
                 string servaluestrn = serialPort1.ReadLine();
                 textBox1.Text = servaluestrn;
@@ -158,11 +168,21 @@ namespace Curve_tracer
 
                     string a = servalspl[0];
                     string b = servalspl[1];
-                    int aint = Convert.ToInt32(a);
-                    int bint = Convert.ToInt32(b);
+                    
+                    float aint = Convert.ToSingle(a);
+                    float bint = Convert.ToSingle(b);
                     progressBar1.Value = Convert.ToInt32(b);
+                    lista.Add(aint);
+                    listb.Add(bint);
+
+                   // int[] alist = lista.ToArray();
+                   // int[] blist = listb.ToArray();
+
                 }
             }
+            aArray = lista.ToArray();
+            bArray = listb.ToArray();
+            this.panel1.Invalidate();
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -243,6 +263,33 @@ namespace Curve_tracer
                 MyInt = 66; // set switch 2
                 b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+
+            }
+        }
+
+        private void panel1_paint(object sender, PaintEventArgs e)
+        {
+            if (aArray != null)
+            {
+
+
+                Graphics ClientDC = panel1.CreateGraphics();
+                Pen Pen1 = new Pen(System.Drawing.Color.Blue, 1);
+                Pen Pen2 = new Pen(System.Drawing.Color.Red, 1);
+                float xmax = bArray.Max();
+                float ymax = aArray.Max();
+                float xscale = panel1.Width;
+                float yscale = panel1.Height;
+                float length = aArray.Length;
+
+                for (int i = 0; i < length - 1; i++)
+                {
+
+                    float xvalue = (bArray[i] / xmax)*xscale;
+
+                    ClientDC.DrawLine(Pen1, (1*xscale), (0*yscale), (0*xscale), (1*yscale));
+                    ClientDC.DrawLine(Pen2, ((bArray[i] / xmax) * xscale), ((aArray[i] / ymax) * yscale), ((bArray[i + 1] / xmax) * xscale), ((aArray[i + 1] / ymax) * xscale));
+                }
 
             }
         }
