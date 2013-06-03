@@ -256,6 +256,7 @@ namespace Curve_tracer
                   yArray = listan.ToArray();
                   xArray = listbn.ToArray();
                   progressBar1.Value = 0;
+                  serialPort1.DiscardInBuffer();
                 this.panel1.Invalidate();
         }
 
