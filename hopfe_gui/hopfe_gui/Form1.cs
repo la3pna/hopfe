@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 
 
 namespace Curve_tracer
@@ -16,9 +17,12 @@ namespace Curve_tracer
 
     public partial class Form1 : Form
     {
-        float[] aArray;
-        float[] bArray;
+        float[] yArray;
+        float[] xArray;
         int stepvalue;
+        private static Bitmap bmpScreenshot;
+        private static Graphics gfxScreenshot;
+       
 
         public Form1()
         {
@@ -96,20 +100,30 @@ namespace Curve_tracer
                                          {
                                              case ".bmp":
 
-                                                  Bitmap bmp = new Bitmap(panel1.Width, panel1.Height);
-                                                  panel1.DrawToBitmap(bmp, panel1.Bounds);
-                                                 // bmp.Save(@"C:\Temp\Test.bmp");
-                                                 // bmp.Save(saveFileDialog1.FileName);
 
+
+                                                 // Hide the form so that it does not appear in the screenshot
+                                                 this.Hide();
+                                                 // Set the bitmap object to the size of the screen
+                                                 bmpScreenshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, PixelFormat.Format32bppArgb);
+                                                 // Create a graphics object from the bitmap
+                                                 gfxScreenshot = Graphics.FromImage(bmpScreenshot);
+                                                 // Take the screenshot from the upper left corner to the right bottom corner
+                                                 gfxScreenshot.CopyFromScreen(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
+                                                 // Save the screenshot to the specified path that the user has chosen
+                                                 bmpScreenshot.Save(saveFileDialog1.FileName, ImageFormat.Png);
+                                                 // Show the form again
+
+                                                 this.Show();
                                                  break;
                                              case ".csv":
                                                  StreamWriter wText =new StreamWriter(myStream);
 
                                       wText.WriteLine("Data from I/V analyzer");
-                                     int length = aArray.Length;
+                                     int length = yArray.Length;
                                      for (int i = 0; i <= length-1; i++)
                                        {
-                                           wText.WriteLine(Convert.ToString(aArray[i]) + ',' + Convert.ToString(bArray[i])); 
+                                           wText.WriteLine(Convert.ToString(yArray[i]) + ',' + Convert.ToString(xArray[i])); 
                                        }
                                          wText.Flush();
                                          wText.Close();
@@ -224,23 +238,23 @@ namespace Curve_tracer
 
                 }
             }
-            float[] aArrayn = lista.ToArray();
-            float[] bArrayn = listb.ToArray();
+            float[] yArrayn = lista.ToArray();
+            float[] xArrayn = listb.ToArray();
 
-            int lengthArray = Convert.ToInt32(aArrayn.Length);
+            int lengthArray = Convert.ToInt32(yArrayn.Length);
             List<float> listan = new List<float>();
             List<float> listbn = new List<float>();
 
             for (int i = 0; i <= (lengthArray - 5); i++)
             {
-                listan.Add(Convert.ToSingle((aArrayn[i] + aArrayn[i + 1] + aArrayn[i + 2] + aArrayn[i + 3]) / 4.0));
-                listbn.Add(Convert.ToSingle((bArrayn[i] + bArrayn[i + 1] + bArrayn[i + 2] + bArrayn[i + 3]) / 4.0));
-               // aArray[i] = ;
-               // bArray[i] = ;
+                listan.Add(Convert.ToSingle((yArrayn[i] + yArrayn[i + 1] + yArrayn[i + 2] + yArrayn[i + 3]) / 4.0));
+                listbn.Add(Convert.ToSingle((xArrayn[i] + xArrayn[i + 1] + xArrayn[i + 2] + xArrayn[i + 3]) / 4.0));
+               // yArray[i] = ;
+               // xArray[i] = ;
                 
             }
-                  aArray = listan.ToArray();
-                  bArray = listbn.ToArray();
+                  yArray = listan.ToArray();
+                  xArray = listbn.ToArray();
                   progressBar1.Value = 0;
                 this.panel1.Invalidate();
         }
@@ -331,29 +345,58 @@ namespace Curve_tracer
 
         private void panel1_paint(object sender, PaintEventArgs e)
         {
-            if (aArray != null)
+            if (yArray != null)
             {
-
+                Pen Pen1;
+                SolidBrush blueBrush;
 
                 Graphics ClientDC = panel1.CreateGraphics();
-                Pen Pen1 = new Pen(System.Drawing.Color.Blue, 1);
-                Pen Pen2 = new Pen(System.Drawing.Color.Red, 1);
+
+                if (blueToolStripMenuItem.Checked == true)
+                {
+                     Pen1 = new Pen(System.Drawing.Color.Blue, 1);
+                     blueBrush = new SolidBrush(Color.Blue);
+                }
+                else if (redToolStripMenuItem.Checked == true)
+                {
+                     Pen1 = new Pen(System.Drawing.Color.Red, 1);
+                     blueBrush = new SolidBrush(Color.Red);
+                }
+                else
+                {
+                    Pen1 = new Pen(System.Drawing.Color.Green, 1);
+                     blueBrush = new SolidBrush(Color.Green);
+                }
+
+               // Pen Pen1 = new Pen(System.Drawing.Color.Blue, 1);
+               Pen Pen2 = new Pen(System.Drawing.Color.Black, 1);
+             //   SolidBrush blueBrush = new SolidBrush(Color.Blue);
+
+
                 Pen Pen3 = new Pen(System.Drawing.Color.Gray, 1);
-                float xmax = bArray.Max()+1;
-                float ymax = aArray.Max()+1;
+                float xmax = xArray.Max()+1;
+                float ymax = yArray.Max()+1;
                 float xscale = panel1.Width;
                 float yscale = panel1.Height;
-                float length = aArray.Length;
+                float length = yArray.Length;
 
                 for (int i = 0; i < length - 1; i++)
                 {
 
-                    float xvalue = (bArray[i] / xmax)*xscale;
-                    SolidBrush blueBrush = new SolidBrush(Color.Blue);
-                    e.Graphics.FillRectangle(blueBrush, ((bArray[i]/xmax)*xscale), (Math.Abs((aArray[i]/ymax)-1)*yscale), 4, 4);
+                    float xvalue = (xArray[i] / xmax)*xscale;
+                
                   //  ClientDC.DrawLine(Pen1, (1*xscale), (0*yscale), (0*xscale), (1*yscale));
-                   // ClientDC.DrawLine(Pen2, ((bArray[i] / xmax) * xscale), ( Math.Abs((aArray[i] / ymax)-1) * yscale), ( (bArray[i + 1] / xmax) * xscale), ( Math.Abs((aArray[i + 1] / ymax)-1) * xscale));
-               
+
+                    if (pointsToolStripMenuItem.Checked == true)
+                    {
+
+                        ClientDC.DrawLine(Pen1, ((xArray[i] / xmax) * xscale), (Math.Abs((yArray[i] / ymax) - 1) * yscale), ((xArray[i + 1] / xmax) * xscale), (Math.Abs((yArray[i + 1] / ymax) - 1) * yscale));
+                    }
+                    else
+                    {
+                        e.Graphics.FillRectangle(blueBrush, ((xArray[i] / xmax) * xscale), (Math.Abs((yArray[i] / ymax) - 1) * yscale), 4, 4);
+
+                    }
                    
 
                 }
@@ -378,6 +421,36 @@ namespace Curve_tracer
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void pointsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void blueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void blueToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            redToolStripMenuItem.Checked = false;
+            greenToolStripMenuItem.Checked = false;
+
+        }
+
+        private void redToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+           
+            blueToolStripMenuItem.Checked = false;
+            greenToolStripMenuItem.Checked = false;
+        }
+
+        private void greenToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            blueToolStripMenuItem.Checked = false;
+            redToolStripMenuItem.Checked = false;
         }
     }
 }
