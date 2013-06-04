@@ -22,6 +22,7 @@ namespace Curve_tracer
         int stepvalue;
         private static Bitmap bmpScreenshot;
         private static Graphics gfxScreenshot;
+        int valueStep = 6;
        
 
         public Form1()
@@ -88,7 +89,6 @@ namespace Curve_tracer
             if(saveFileDialog1.ShowDialog() == DialogResult.OK) 
             { 
 
-
                   if((myStream = saveFileDialog1.OpenFile()) != null) 
                   { 
                                       
@@ -147,8 +147,6 @@ namespace Curve_tracer
             }
         }
 
- 
-
         private void comboBox2_SelectedValueChanged(object sender, EventArgs e)
         {
             if (comboBox2.Text == "PNP")
@@ -200,7 +198,7 @@ namespace Curve_tracer
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            serialPort1.DiscardInBuffer();
             int MyInt = 72; // set H for the sweep
             byte[] b = BitConverter.GetBytes(MyInt);
             serialPort1.Write(b, 0, 1);
@@ -247,8 +245,8 @@ namespace Curve_tracer
 
             for (int i = 0; i <= (lengthArray - 5); i++)
             {
-                listan.Add(Convert.ToSingle((yArrayn[i] + yArrayn[i + 1] + yArrayn[i + 2] + yArrayn[i + 3]) / 4.0));
-                listbn.Add(Convert.ToSingle((xArrayn[i] + xArrayn[i + 1] + xArrayn[i + 2] + xArrayn[i + 3]) / 4.0));
+                listan.Add(Convert.ToSingle((yArrayn[i] + yArrayn[i + 1] ) / 2.0));
+                listbn.Add(Convert.ToSingle((xArrayn[i] + xArrayn[i + 1] ) / 2.0));
                // yArray[i] = ;
                // xArray[i] = ;
                 
@@ -402,13 +400,13 @@ namespace Curve_tracer
 
                 }
 
-                for (int i = 0; i <= 10; i++)
+                for (int i = 0; i <= 11; i++)
                 {
                     ClientDC.DrawLine(Pen3, (i * xscale)/10, (0 * yscale), (i * xscale)/10, (1 * yscale));
 
                 }
 
-                for (int i = 0; i <= 10; i++)
+                for (int i = 0; i <= 11; i++)
                 {
                     ClientDC.DrawLine(Pen3, (0 * xscale), (i * yscale)/10, (1 * xscale), (i * yscale)/10);
                 }
@@ -452,6 +450,16 @@ namespace Curve_tracer
             
             blueToolStripMenuItem.Checked = false;
             redToolStripMenuItem.Checked = false;
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
