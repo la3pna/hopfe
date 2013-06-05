@@ -206,7 +206,6 @@ namespace Curve_tracer
 
         }
 
-
         private void rs232datamottat(object s, EventArgs e)
         {
             int steps =6;
@@ -284,16 +283,16 @@ namespace Curve_tracer
             }
             else if (comboBox3.Text == "10k")
             {
-                label7.Text = "10k";
-                int MyInt = 66; // set switch 2
-                byte[] b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 67; // set switch 3
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 68; // set switch 4
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
+               // label7.Text = "10k";
+               // int MyInt = 66; // set switch 2
+               // byte[] b = BitConverter.GetBytes(MyInt);
+               // serialPort1.Write(b, 0, 1);
+               // MyInt = 67; // set switch 3
+               // b = BitConverter.GetBytes(MyInt);
+               // serialPort1.Write(b, 0, 1);
+               // MyInt = 68; // set switch 4
+               // b = BitConverter.GetBytes(MyInt);
+               // serialPort1.Write(b, 0, 1);
              //   label8.Text = Convert.ToString((5 / stepvalue) / 10000);
 
 
@@ -301,44 +300,29 @@ namespace Curve_tracer
             else if (comboBox2.Text == "50k")
             {
                 label7.Text = "50k";
-                int MyInt = 65; // set switch 1
+                int MyInt = 66; // set switch 1
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
-                MyInt = 67; // set switch 3
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 68; // set switch 4
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
+               
 
             }
             else if (comboBox3.Text == "100k")
             {
                 label7.Text = "100k";
-                int MyInt = 65; // set switch 1
+                int MyInt = 67; // set switch 1
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
-                MyInt = 66; // set switch 2
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 68; // set switch 4
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
+               // MyInt = 66; // set switch 2
+            
 
             }
             else if (comboBox3.Text == "200k")
             {
                 label7.Text = "200k";
-                int MyInt = 65; // set switch 1
-                byte[] b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 67; // set switch 3
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 66; // set switch 2
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
 
+               int MyInt = 68; // set switch 4
+               byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
             }
         }
 
