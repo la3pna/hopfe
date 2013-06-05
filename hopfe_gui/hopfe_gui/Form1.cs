@@ -151,6 +151,8 @@ namespace Curve_tracer
         {
             if (comboBox2.Text == "PNP")
             {
+                try
+                {
                 label5.Text = "PNP";
                 int MyInt = 83; // set S for the negative supply
                 byte[] b = BitConverter.GetBytes(MyInt);
@@ -158,39 +160,77 @@ namespace Curve_tracer
                 MyInt = 74; // set J for the positive base supply
                 b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             
             }
             else if (comboBox2.Text == "NPN")
             {
+                try
+                {
                 label5.Text = "NPN";
                 int MyInt = 74; // set J for the postive base supply
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
             }
             else if (comboBox2.Text == "J-FET (N)")
             {
+                try
+                {
                 label5.Text = "J-FET";
                 int MyInt = 73; // set I for the negative base supply
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             
 
             }
             else if (comboBox2.Text == "MOSFET")
             {
+                try
+                {
                 label5.Text = "MOS";
                 int MyInt = 74; // set J for the positive base supply
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             
             }
             else if (comboBox2.Text == "J-FET (P)")
             {
+                try
+                {
                 label5.Text = "J-FET";
                 int MyInt = 74; // set J for the positive base supply
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             
             }
 
@@ -198,11 +238,21 @@ namespace Curve_tracer
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            try
+                {
             serialPort1.DiscardInBuffer();
             int MyInt = 72; // set H for the sweep
             byte[] b = BitConverter.GetBytes(MyInt);
             serialPort1.Write(b, 0, 1);
             this.Invoke(new EventHandler(rs232datamottat));
+                }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
         }
 
@@ -269,24 +319,36 @@ namespace Curve_tracer
                 label7.Text = "0";
                 int MyInt = 65; // set switch 1
                 byte[] b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 66; // set switch 2
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 67; // set switch 3
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
-                MyInt = 68; // set switch 4
-                b = BitConverter.GetBytes(MyInt);
-                serialPort1.Write(b, 0, 1);
+                try
+                {
+                    serialPort1.Write(b, 0, 1);
+                    MyInt = 66; // set switch 2
+                    b = BitConverter.GetBytes(MyInt);
+                    serialPort1.Write(b, 0, 1);
+                    MyInt = 67; // set switch 3
+                    b = BitConverter.GetBytes(MyInt);
+                    serialPort1.Write(b, 0, 1);
+                    MyInt = 68; // set switch 4
+                    b = BitConverter.GetBytes(MyInt);
+                    serialPort1.Write(b, 0, 1);
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            
 
             }
             else if (comboBox3.Text == "10k")
             {
-               // label7.Text = "10k";
-               // int MyInt = 66; // set switch 2
-               // byte[] b = BitConverter.GetBytes(MyInt);
-               // serialPort1.Write(b, 0, 1);
+                try
+                {
+                label7.Text = "10k";
+                int MyInt = 66; // set switch 2
+                byte[] b = BitConverter.GetBytes(MyInt);
+                serialPort1.Write(b, 0, 1);
                // MyInt = 67; // set switch 3
                // b = BitConverter.GetBytes(MyInt);
                // serialPort1.Write(b, 0, 1);
@@ -295,34 +357,69 @@ namespace Curve_tracer
                // serialPort1.Write(b, 0, 1);
              //   label8.Text = Convert.ToString((5 / stepvalue) / 10000);
 
+                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            
+
 
             }
             else if (comboBox2.Text == "50k")
             {
+                try
+                {
                 label7.Text = "50k";
                 int MyInt = 66; // set switch 1
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+         }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            
                
+
 
             }
             else if (comboBox3.Text == "100k")
             {
+                try
+                {
                 label7.Text = "100k";
                 int MyInt = 67; // set switch 1
                 byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
                // MyInt = 66; // set switch 2
+             }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             
 
             }
             else if (comboBox3.Text == "200k")
             {
+                try
+                {
                 label7.Text = "200k";
 
                int MyInt = 68; // set switch 4
                byte[] b = BitConverter.GetBytes(MyInt);
                 serialPort1.Write(b, 0, 1);
+ }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            
             }
         }
 
@@ -443,7 +540,39 @@ namespace Curve_tracer
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
+            if (numericUpDown2.Value > valueStep)
+            {
+                try
+                {
+                    serialPort1.DiscardInBuffer();
+                    int MyInt = 89; // set H for the sweep
+                    byte[] b = BitConverter.GetBytes(MyInt);
+                    serialPort1.Write(b, 0, 1);
+                    this.Invoke(new EventHandler(rs232datamottat));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
+            }
+            if (numericUpDown2.Value < valueStep)
+            {
+                try
+                {
+                    serialPort1.DiscardInBuffer();
+                    int MyInt = 90; // set H for the sweep
+                    byte[] b = BitConverter.GetBytes(MyInt);
+                    serialPort1.Write(b, 0, 1);
+                    this.Invoke(new EventHandler(rs232datamottat));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

@@ -74,45 +74,45 @@ void loop() {
   
   } 
   
-    if (inData == 'K')  // if H (ASCII 72), printoutput
+    if (inData == 'K')  // if H (ASCII 75), Select NPN setup
   {
     
     
-        digitalWrite(pol, HIGH );        // Turn off the LED
+        digitalWrite(pol, HIGH );        
         inData = 0;
           Serial.println("HIGH");
       }
       
-      if (inData == 'L'){                                          // Button is pushed
+      if (inData == 'L'){    // Select PNP setup                                      
         digitalWrite(pol,LOW);
         inData = 0;
   }
 
-    if (inData == 'M')  // if H (ASCII 72), printoutput
+    if (inData == 'M')  // if H (ASCII 72), enable SMPS
   {
     
       
-        digitalWrite(smps, HIGH );        // Turn off the LED
+        digitalWrite(smps, HIGH );        
         inData = 0;
           Serial.println("HIGH");
-      }
+  }
       
-      if (inData == 'N'){                                          // Button is pushed
+ if (inData == 'N'){          // if N (ASCII 78) de-enable SMPS
         digitalWrite(smps,LOW);
         inData = 0;
   }
   
 
- if (inData == 'Y')  // if H (ASCII 72), printoutput
+ if (inData == 'Y')  // if H (ASCII 89), printoutput
   {
     
      if ( digitalRead(smps) == LOW  ) { // Button not pushed
-        stepno = stepno + 1;        // Turn off the LED
+        stepno = stepno + 1;        
         inData = 0;
           Serial.println(stepno);
      }
    }
-  if (inData == 'Z')  // if H (ASCII 72), printoutput
+  if (inData == 'Z')  // if z (ASCII 90), increase steps
   {
     
       stepno = stepno - 1;
@@ -125,7 +125,7 @@ void loop() {
    
   }
 
-  if (inData == 'A')  // if H (ASCII 72), printoutput
+  if (inData == 'A')  // Select resistor 1
   {
     
       if ( digitalRead(neg) == LOW  ) { // Button not pushed
@@ -138,7 +138,7 @@ void loop() {
    
   }
   }
-  if (inData == 'B')  // if H (ASCII 72), printoutput
+  if (inData == 'B')  // select resistor 2
   {
     
    if ( digitalRead(ResB) == LOW  ) { // Button not pushed
@@ -151,7 +151,7 @@ void loop() {
    
   }
   }
-  if (inData == 'C')  // if H (ASCII 72), printoutput
+  if (inData == 'C')  // select resistor 3
   {
     
     if ( digitalRead(ResC) == LOW  ) { // Button not pushed
@@ -164,7 +164,7 @@ void loop() {
    
   }
   }
-  if (inData == 'D')  // if H (ASCII 72), printoutput
+  if (inData == 'D')  // select resistor 4
   {
     
      if ( digitalRead(ResD) == LOW  ) { // Button not pushed
