@@ -245,8 +245,8 @@ namespace Curve_tracer
 
             for (int i = 0; i <= (lengthArray - 5); i++)
             {
-                listan.Add(Convert.ToSingle((yArrayn[i] + yArrayn[i + 1] ) / 2.0));
-                listbn.Add(Convert.ToSingle((xArrayn[i] + xArrayn[i + 1] ) / 2.0));
+                listan.Add(Convert.ToSingle((yArrayn[i] + yArrayn[i + 1] + yArrayn[i + 2] + yArrayn[i + 3]) / 4.0));
+                listbn.Add(Convert.ToSingle((xArrayn[i] + xArrayn[i + 1] + xArrayn[i + 2] + xArrayn[i + 3]) / 4.0));
                // yArray[i] = ;
                // xArray[i] = ;
                 
