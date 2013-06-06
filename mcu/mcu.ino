@@ -109,7 +109,7 @@ void loop() {
      if ( digitalRead(smps) == LOW  ) { // Button not pushed
         stepno = stepno + 1;        
         inData = 0;
-          Serial.println(stepno);
+       //   Serial.println(stepno);
      }
    }
   if (inData == 'Z')  // if z (ASCII 90), increase steps
@@ -121,7 +121,7 @@ void loop() {
         if (stepno <= 0 ){
           stepno = 1;
         }
-          Serial.println(stepno);
+        //  Serial.println(stepno);
    
   }
 

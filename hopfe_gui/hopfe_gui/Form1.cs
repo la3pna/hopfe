@@ -545,10 +545,11 @@ namespace Curve_tracer
                 try
                 {
                     serialPort1.DiscardInBuffer();
-                    int MyInt = 89; // set H for the sweep
+                    int MyInt = 89; // set Y for the sweep
                     byte[] b = BitConverter.GetBytes(MyInt);
                     serialPort1.Write(b, 0, 1);
                     this.Invoke(new EventHandler(rs232datamottat));
+                    valueStep = valueStep + 1;
                 }
                 catch (Exception ex)
                 {
@@ -562,10 +563,11 @@ namespace Curve_tracer
                 try
                 {
                     serialPort1.DiscardInBuffer();
-                    int MyInt = 90; // set H for the sweep
+                    int MyInt = 90; // set Z for the sweep
                     byte[] b = BitConverter.GetBytes(MyInt);
                     serialPort1.Write(b, 0, 1);
                     this.Invoke(new EventHandler(rs232datamottat));
+                    valueStep = valueStep - 1;
                 }
                 catch (Exception ex)
                 {
